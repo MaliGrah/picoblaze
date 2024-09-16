@@ -1,0 +1,52 @@
+/* App.css */
+
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 60px;
+  padding: 20px;
+  color: white;
+}
+
+.content {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 20px;
+  margin: 20px;
+}
+
+.Editor {
+  flex: 1;
+  max-width: 800px; /* Adjust based on the size of your editor */
+  height: 500px; /* Adjust to fit your needs */
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.NexysA7 {
+  flex: 1;
+  max-width: 800px; /* Adjust based on the size of your SVG board */
+  height: auto; /* Ensure it maintains aspect ratio */
+  border: 1px solid #ccc;
+}
+
+.editor-container {
+  text-align: left !important; /* Ensure text alignment is set to left */
+}
+
+/* Optional: Add additional styling if necessary */
+.editor-container .monaco-editor {
+  overflow-x: auto; /* Prevent horizontal overflow issues */
+}
+
+.monaco-editor .view-lines {
+  text-align: left !important; /* Ensure lines are aligned to the left */
+}
+
+#container {
+  overflow: auto;
+}

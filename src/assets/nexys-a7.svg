@@ -1,0 +1,54 @@
+<svg width="800" height="600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Board Outline -->
+  <rect x="0" y="0" width="800" height="600" fill="#e0e0e0" stroke="#000" stroke-width="2"/>
+
+  <!-- LEDs -->
+  <!-- Adding 16 LEDs with unique IDs -->
+  <g id="leds">
+    <circle id="LED1" cx="50" cy="400" r="15" fill="black" />
+    <circle id="LED2" cx="100" cy="400" r="15" fill="black" />
+    <circle id="LED3" cx="150" cy="400" r="15" fill="black" />
+    <circle id="LED4" cx="200" cy="400" r="15" fill="black" />
+    <circle id="LED5" cx="250" cy="400" r="15" fill="black" />
+    <circle id="LED6" cx="300" cy="400" r="15" fill="black" />
+    <circle id="LED7" cx="350" cy="400" r="15" fill="black" />
+    <circle id="LED8" cx="400" cy="400" r="15" fill="black" />
+    <circle id="LED9" cx="50" cy="450" r="15" fill="black" />
+    <circle id="LED10" cx="100" cy="450" r="15" fill="black" />
+    <circle id="LED11" cx="150" cy="450" r="15" fill="black" />
+    <circle id="LED12" cx="200" cy="450" r="15" fill="black" />
+    <circle id="LED13" cx="250" cy="450" r="15" fill="black" />
+    <circle id="LED14" cx="300" cy="450" r="15" fill="black" />
+    <circle id="LED15" cx="350" cy="450" r="15" fill="black" />
+    <circle id="LED16" cx="400" cy="450" r="15" fill="black" />
+  </g>
+
+  <!-- RGB LED -->
+  <g id="rgb-led">
+    <circle id="rgb-red" cx="600" cy="150" r="15" fill="black" />
+    <circle id="rgb-green" cx="600" cy="200" r="15" fill="black" />
+    <circle id="rgb-blue" cx="600" cy="250" r="15" fill="black" />
+  </g>
+
+  <!-- Buttons -->
+  <!-- Arranged in north, south, east, west, center positions with unique IDs -->
+  <g id="buttons">
+    <rect id="button-north" x="505" y="380" width="40" height="40" fill="gray" stroke="black" stroke-width="2"/>
+    <rect id="button-south" x="505" y="480" width="40" height="40" fill="gray" stroke="black" stroke-width="2"/>
+    <rect id="button-east" x="555" y="430" width="40" height="40" fill="gray" stroke="black" stroke-width="2"/>
+    <rect id="button-west" x="455" y="430" width="40" height="40" fill="gray" stroke="black" stroke-width="2"/>
+    <rect id="button-center" x="505" y="430" width="40" height="40" fill="gray" stroke="black" stroke-width="2"/>
+  </g>
+
+  <!-- Labels -->
+  <!-- Optional labels for LEDs and Buttons -->
+  <text x="50" y="390" font-family="Arial" font-size="12" fill="black">LED 1</text>
+  <text x="600" y="140" font-family="Arial" font-size="12" fill="black">RGB Red</text>
+  <text x="600" y="190" font-family="Arial" font-size="12" fill="black">RGB Green</text>
+  <text x="600" y="240" font-family="Arial" font-size="12" fill="black">RGB Blue</text>
+  <text x="525" y="370" font-family="Arial" font-size="12" fill="black">Button North</text>
+  <text x="525" y="470" font-family="Arial" font-size="12" fill="black">Button South</text>
+  <text x="575" y="440" font-family="Arial" font-size="12" fill="black">Button East</text>
+  <text x="475" y="440" font-family="Arial" font-size="12" fill="black">Button West</text>
+  <text x="525" y="420" font-family="Arial" font-size="12" fill="black">Button Center</text>
+</svg>
