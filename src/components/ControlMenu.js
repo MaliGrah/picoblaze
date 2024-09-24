@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 
-const ControlMenu = ({ editor, updateSVG, nexysA7Ref }) => {
+const ControlMenu = ({ editor, updateSVG }) => {
   const [program, setProgram] = useState('');
   const fileInputRef = useRef(null);
 
@@ -47,24 +47,22 @@ const ControlMenu = ({ editor, updateSVG, nexysA7Ref }) => {
   const runProgram = () => {
     if (program) {
       const results = simulateProgramExecution(program);
-      updateSVG(results);
+      updateSVG(results); // Send the results to the SVG
     }
   };
 
   const simulateProgramExecution = (program) => {
     const lines = program.split('\n');
-    const results = lines.map((line, index) => {
-      const ledIndex = index % 16; // Adjust LED index based on your logic
-      const isOn = line.includes('LED on'); // Example condition
-
-      if (line.includes('[error]')) {
-        return { type: 'error', message: `Processed error line: ${line}` };
-      } else if (line.includes('[info]')) {
-        return { type: 'info', message: `Processed info line: ${line}` };
-      } else {
-        return { type: 'led', index: ledIndex, state: isOn };
+    const results = lines.map((line) => {
+      const ledCommandMatch = line.match(/LED(\d+)\s+(on|off)/i); // Match "LEDx on" or "LEDx off"
+      if (ledCommandMatch) {
+        const ledNumber = parseInt(ledCommandMatch[1], 10); // Extract the LED number
+        const isOn = ledCommandMatch[2].toLowerCase() === 'on'; // Determine the state
+        return { type: 'led', index: ledNumber - 1, state: isOn }; // Adjust for 0-indexed array
       }
-    });
+      // Add more command handling as needed (e.g., RGB control)
+      return null;
+    }).filter(result => result !== null); // Filter out null entries
     return results;
   };
 

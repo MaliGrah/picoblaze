@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useImperativeHandle, forwardRef } from 'react';
 import NexysA7SVG from '../assets/nexys-a7.svg';
 
+
+
 const NexysA7 = forwardRef((props, ref) => {
   const [ledStatus, setLedStatus] = useState(Array(16).fill(false));
   const [rgbStatus, setRgbStatus] = useState({ r: false, g: false, b: false });
@@ -8,20 +10,23 @@ const NexysA7 = forwardRef((props, ref) => {
 
   useEffect(() => {
     if (props.data) {
-      console.log('Props data received:', props.data);
-      const newLedStatus = Array(16).fill(false);
-      let newRgbStatus = { r: false, g: false, b: false };
+      // Use requestAnimationFrame for efficient updates
+      requestAnimationFrame(() => {
+        console.log('Props data received:', props.data);
+        const newLedStatus = Array(16).fill(false);
+        let newRgbStatus = { r: false, g: false, b: false };
 
-      props.data.forEach((entry) => {
-        if (entry.type === 'led') {
-          newLedStatus[entry.index] = entry.state;
-        } else if (entry.type === 'rgb') {
-          newRgbStatus = { ...newRgbStatus, ...entry.state };
-        }
+        props.data.forEach((entry) => {
+          if (entry.type === 'led') {
+            newLedStatus[entry.index] = entry.state;
+          } else if (entry.type === 'rgb') {
+            newRgbStatus = { ...newRgbStatus, ...entry.state };
+          }
+        });
+
+        setLedStatus(newLedStatus);
+        setRgbStatus(newRgbStatus);
       });
-
-      setLedStatus(newLedStatus);
-      setRgbStatus(newRgbStatus);
     }
   }, [props.data]);
 
@@ -82,9 +87,13 @@ const NexysA7 = forwardRef((props, ref) => {
     fill: ledStatus[index] ? 'red' : 'black',
   });
 
-  const getRgbStyle = (color) => ({
-    fill: rgbStatus[color] ? color : 'black',
-  });
+  const getRgbStyle = () => {
+    let fillColor = 'black';
+    if (rgbStatus.r || rgbStatus.g || rgbStatus.b) {
+      fillColor = `rgb(${rgbStatus.r ? 255 : 0}, ${rgbStatus.g ? 255 : 0}, ${rgbStatus.b ? 255 : 0})`;
+    }
+    return { fill: fillColor };
+  };
 
   const getButtonStyle = (index) => ({
     fill: buttonStatus[index] ? 'green' : 'gray',
@@ -110,9 +119,9 @@ const NexysA7 = forwardRef((props, ref) => {
           ))}
 
           {/* Render RGB LED */}
-          <circle cx={600} cy={150} r={15} style={getRgbStyle('r')} onClick={() => toggleRgb('r')} />
-          <circle cx={600} cy={200} r={15} style={getRgbStyle('g')} onClick={() => toggleRgb('g')} />
-          <circle cx={600} cy={250} r={15} style={getRgbStyle('b')} onClick={() => toggleRgb('b')} />
+          <circle cx={600} cy={150} r={15} style={getRgbStyle()} onClick={() => toggleRgb('r')} />
+          <circle cx={600} cy={200} r={15} style={getRgbStyle()} onClick={() => toggleRgb('g')} />
+          <circle cx={600} cy={250} r={15} style={getRgbStyle()} onClick={() => toggleRgb('b')} />
 
           {/* Render Button rectangles based on positions */}
           {Object.keys(buttonPositions).map((position, index) => (

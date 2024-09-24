@@ -3,6 +3,29 @@ import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 import picoBlazeLanguage from './picoblaze'; // Adjust path as necessary
 import './theme'; // Import your theme file
 
+// Function to handle XMLHttpRequest
+function xhr(url) {
+  const req = new XMLHttpRequest();
+  return new Promise((resolve, reject) => {
+    req.onreadystatechange = function () {
+      if (req.readyState === 4) {
+        if ((req.status >= 200 && req.status < 300) || req.status === 1223) {
+          resolve(req);
+        } else {
+          console.error(`Error loading ${url}: ${req.statusText}`);
+          reject(req);
+        }
+      }
+    };
+
+    req.open('GET', url, true);
+    req.responseType = '';
+    req.send(null);
+  }).catch(() => {
+    req.abort();
+  });
+}
+
 window.MonacoEnvironment = {
   getWorkerUrl: function (workerId, label) {
     return `data:text/javascript;charset=utf-8,${encodeURIComponent(`
@@ -11,7 +34,7 @@ window.MonacoEnvironment = {
       };
       importScripts('${window.location.origin}/monaco-editor/min/vs/base/worker/workerMain.js');`
     )}`;
-  }
+  },
 };
 
 const Editor = ({ onMount }) => {
@@ -38,8 +61,8 @@ const Editor = ({ onMount }) => {
       ],
       colors: {
         'editor.background': '#FFFFFF',
-        'editor.foreground': '#000000'
-      }
+        'editor.foreground': '#000000',
+      },
     });
 
     // Initialize the editor with the custom theme

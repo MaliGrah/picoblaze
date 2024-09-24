@@ -2,6 +2,7 @@
 
 .App {
   text-align: center;
+  font-family: Arial, sans-serif; /* Set a standard font */
 }
 
 .App-header {
@@ -21,32 +22,33 @@
 
 .Editor {
   flex: 1;
-  max-width: 800px; /* Adjust based on the size of your editor */
-  height: 500px; /* Adjust to fit your needs */
+  max-width: 800px;
+  height: 500px;
   border: 1px solid #ccc;
   text-align: left;
+  overflow: hidden; /* Hide any overflow */
 }
 
 .NexysA7 {
   flex: 1;
-  max-width: 800px; /* Adjust based on the size of your SVG board */
-  height: auto; /* Ensure it maintains aspect ratio */
+  max-width: 800px;
+  height: auto;
   border: 1px solid #ccc;
 }
 
 .editor-container {
-  text-align: left !important; /* Ensure text alignment is set to left */
+  text-align: left !important;
 }
 
-/* Optional: Add additional styling if necessary */
 .editor-container .monaco-editor {
-  overflow-x: auto; /* Prevent horizontal overflow issues */
+  overflow-x: hidden; /* Prevents horizontal scrolling */
 }
 
 .monaco-editor .view-lines {
-  text-align: left !important; /* Ensure lines are aligned to the left */
+  text-align: left !important;
+  white-space: nowrap; /* Prevent wrapping of text */
 }
 
 #container {
-  overflow: auto;
+  overflow-y: auto; /* Allow vertical scrolling */
 }
