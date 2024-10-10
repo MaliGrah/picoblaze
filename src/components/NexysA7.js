@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useImperativeHandle, forwardRef } from 'react';
 import NexysA7SVG from '../assets/nexys-a7.svg';
 
-
-
 const NexysA7 = forwardRef((props, ref) => {
   const [ledStatus, setLedStatus] = useState(Array(16).fill(false));
   const [rgbStatus, setRgbStatus] = useState({ r: false, g: false, b: false });
@@ -10,7 +8,6 @@ const NexysA7 = forwardRef((props, ref) => {
 
   useEffect(() => {
     if (props.data) {
-      // Use requestAnimationFrame for efficient updates
       requestAnimationFrame(() => {
         console.log('Props data received:', props.data);
         const newLedStatus = Array(16).fill(false);

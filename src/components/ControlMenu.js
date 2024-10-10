@@ -1,4 +1,5 @@
 import React, { useState, useRef } from 'react';
+import executeInstruction from './executeInstruction';  // Make sure the path is correct
 
 const ControlMenu = ({ editor, updateSVG }) => {
   const [program, setProgram] = useState('');
@@ -53,16 +54,38 @@ const ControlMenu = ({ editor, updateSVG }) => {
 
   const simulateProgramExecution = (program) => {
     const lines = program.split('\n');
-    const results = lines.map((line) => {
-      const ledCommandMatch = line.match(/LED(\d+)\s+(on|off)/i); // Match "LEDx on" or "LEDx off"
-      if (ledCommandMatch) {
-        const ledNumber = parseInt(ledCommandMatch[1], 10); // Extract the LED number
-        const isOn = ledCommandMatch[2].toLowerCase() === 'on'; // Determine the state
-        return { type: 'led', index: ledNumber - 1, state: isOn }; // Adjust for 0-indexed array
+    const results = [];
+    let data = { leds: Array(16).fill(false), rgb: { r: false, g: false, b: false }, pc: 0, stack: [] };
+
+    lines.forEach((line) => {
+      line = line.trim();
+
+      // Parse the program based on the instruction type
+      if (line.startsWith('LOAD')) {
+        const [, registerX, value] = line.split(' ');
+        results.push(executeInstruction({ type: 'LOAD', registerX, value: parseInt(value, 10) }, data));
+      } else if (line.startsWith('ADD')) {
+        const [, registerX, registerY] = line.split(' ');
+        results.push(executeInstruction({ type: 'ADD', registerX, registerY }, data));
+      } else if (line.startsWith('SUB')) {
+        const [, registerX, registerY] = line.split(' ');
+        results.push(executeInstruction({ type: 'SUB', registerX, registerY }, data)); // Added SUB instruction
+      } else if (line.startsWith('OUTPUT')) {
+        const [, port, value] = line.split(' ');
+        results.push(executeInstruction({ type: 'OUTPUT', port: parseInt(port, 10), value: parseInt(value, 10) }, data));
+      } else if (line.startsWith('JUMP')) {
+        const [, address] = line.split(' ');
+        results.push(executeInstruction({ type: 'JUMP', address: parseInt(address, 16) }, data));
+      } else if (line.startsWith('CALL')) {
+        const [, address] = line.split(' ');
+        results.push(executeInstruction({ type: 'CALL', address: parseInt(address, 16) }, data));
+      } else if (line.startsWith('RETURN')) {
+        results.push(executeInstruction({ type: 'RETURN' }, data));
       }
-      // Add more command handling as needed (e.g., RGB control)
-      return null;
-    }).filter(result => result !== null); // Filter out null entries
+      // Add other instructions here like SUB, AND, OR, etc.
+      // You can follow the similar pattern as for ADD, LOAD, etc.
+    });
+
     return results;
   };
 
