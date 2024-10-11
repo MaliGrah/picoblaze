@@ -4,6 +4,7 @@ import NexysA7 from './components/NexysA7';
 import ControlMenu from './components/ControlMenu';
 import './App.css';
 
+
 function App() {
   const [editor, setEditor] = useState(null);
   const nexysA7Ref = useRef(null);
