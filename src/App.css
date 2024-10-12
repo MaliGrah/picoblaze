@@ -52,3 +52,10 @@
 #container {
   overflow-y: auto; /* Allow vertical scrolling */
 }
+
+.myBreakpoint {
+  background-color: red;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
